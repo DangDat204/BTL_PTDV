@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+# ============================================================
+# Feign Client URLs - points to each microservice
+# In production, these would use service discovery (Eureka/Consul)
+# ============================================================
+feign:
+  client:
+    config:
+      user-service:
+        url: http://localhost:8081
+        connectTimeout: 5000
+        readTimeout: 5000
+      order-query-service:
+        url: http://localhost:8084
+        connectTimeout: 5000
+        readTimeout: 5000
+      order-command-service:
+        url: http://localhost:8083
+        connectTimeout: 5000
+        readTimeout: 5000
+
+logging:
+  level:
+    com.demo.apigateway: DEBUG

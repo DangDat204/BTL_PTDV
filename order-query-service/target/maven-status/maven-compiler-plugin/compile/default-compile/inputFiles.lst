@@ -1,0 +1,8 @@
+C:\Users\DANG TIEN DAT\Downloads\smart-order-system\smart-order-system\order-query-service\src\main\java\com\demo\orderquery\config\RabbitMQConfig.java
+C:\Users\DANG TIEN DAT\Downloads\smart-order-system\smart-order-system\order-query-service\src\main\java\com\demo\orderquery\controller\OrderQueryController.java
+C:\Users\DANG TIEN DAT\Downloads\smart-order-system\smart-order-system\order-query-service\src\main\java\com\demo\orderquery\entity\OrderSummaryView.java
+C:\Users\DANG TIEN DAT\Downloads\smart-order-system\smart-order-system\order-query-service\src\main\java\com\demo\orderquery\event\OrderCreatedEvent.java
+C:\Users\DANG TIEN DAT\Downloads\smart-order-system\smart-order-system\order-query-service\src\main\java\com\demo\orderquery\event\OrderEventListener.java
+C:\Users\DANG TIEN DAT\Downloads\smart-order-system\smart-order-system\order-query-service\src\main\java\com\demo\orderquery\OrderQueryServiceApplication.java
+C:\Users\DANG TIEN DAT\Downloads\smart-order-system\smart-order-system\order-query-service\src\main\java\com\demo\orderquery\repository\OrderSummaryViewRepository.java
+C:\Users\DANG TIEN DAT\Downloads\smart-order-system\smart-order-system\order-query-service\src\main\java\com\demo\orderquery\service\OrderQueryService.java

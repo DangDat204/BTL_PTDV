@@ -1,0 +1,6 @@
+com\demo\userservice\UserServiceApplication.class
+com\demo\userservice\repository\UserRepository.class
+com\demo\userservice\service\UserService.class
+com\demo\userservice\controller\UserController.class
+com\demo\userservice\entity\User$UserBuilder.class
+com\demo\userservice\entity\User.class

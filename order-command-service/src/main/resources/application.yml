@@ -1,0 +1,35 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: order-command-service
+
+  # ============================================================
+  # CQRS - Write side uses dedicated write database (order_write_db)
+  # This is completely separate from order_read_db used by order-query-service
+  # Benefit: Write DB can be optimized for WRITES (normalized schema, ACID)
+  # ============================================================
+  datasource:
+    url: jdbc:mysql://localhost:3307/order_write_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  # ============================================================
+  # RabbitMQ config - used to publish OrderCreatedEvent
+  # This is the core of Event-Driven Architecture in CQRS
+  # ============================================================
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

@@ -1,0 +1,34 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: order-query-service
+
+  # ============================================================
+  # CQRS - Read side uses dedicated read database (order_read_db)
+  # This is a completely separate MySQL instance (mysql-read on port 3308)
+  # Optimized for fast reads - denormalized, pre-aggregated data
+  # ============================================================
+  datasource:
+    url: jdbc:mysql://localhost:3308/order_read_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  # ============================================================
+  # RabbitMQ - consumed to keep read model in sync with write side
+  # ============================================================
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

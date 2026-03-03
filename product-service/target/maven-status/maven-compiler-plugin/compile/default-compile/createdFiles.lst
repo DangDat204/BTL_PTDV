@@ -1,0 +1,6 @@
+com\demo\productservice\entity\Product$ProductBuilder.class
+com\demo\productservice\repository\ProductRepository.class
+com\demo\productservice\service\ProductService.class
+com\demo\productservice\controller\ProductController.class
+com\demo\productservice\ProductServiceApplication.class
+com\demo\productservice\entity\Product.class

@@ -1,0 +1,12 @@
+com\demo\apigateway\dto\UserDto.class
+com\demo\apigateway\ApiGatewayApplication.class
+com\demo\apigateway\dto\UserOrderSummaryResponse$UserOrderSummaryResponseBuilder.class
+com\demo\apigateway\controller\GatewayController.class
+com\demo\apigateway\dto\UserDto$UserDtoBuilder.class
+com\demo\apigateway\client\UserServiceClient.class
+com\demo\apigateway\client\OrderQueryServiceClient.class
+com\demo\apigateway\dto\OrderSummaryDto.class
+com\demo\apigateway\dto\UserOrderSummaryResponse.class
+com\demo\apigateway\client\OrderCommandServiceClient.class
+com\demo\apigateway\config\FeignConfig.class
+com\demo\apigateway\dto\OrderSummaryDto$OrderSummaryDtoBuilder.class

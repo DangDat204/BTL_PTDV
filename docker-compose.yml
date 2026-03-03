@@ -1,0 +1,114 @@
+version: '3.8'
+
+# ============================================================
+# Smart Order System - Docker Compose
+#
+# Services:
+# - mysql-write: Write database for order-command-service (port 3307)
+#   Hosts: order_write_db (CQRS Write Model)
+#
+# - mysql-read: Read database for order-query-service (port 3308)
+#   Hosts: order_read_db (CQRS Read Model with pre-computed views)
+#
+# - mysql-main: Shared database server for user_db and product_db (port 3306)
+#
+# - rabbitmq: Message broker for event-driven communication between
+#   order-command-service (publisher) and order-query-service (consumer)
+#
+# This 3-database + 1-broker setup demonstrates:
+# 1. Database-per-service pattern (distributed query problem)
+# 2. CQRS with separate write/read databases
+# 3. Event-driven eventual consistency via RabbitMQ
+# ============================================================
+
+services:
+
+  # ============================================================
+  # Main MySQL (user_db + product_db)
+  # ============================================================
+  mysql-main:
+    image: mysql:8.0
+    container_name: mysql-main
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: user_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-main-data:/var/lib/mysql
+      - ./init/mysql-main-init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # Write MySQL (order_write_db) - CQRS Command Side
+  # Optimized for WRITE operations: normalized, ACID compliant
+  # ============================================================
+  mysql-write:
+    image: mysql:8.0
+    container_name: mysql-write
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: order_write_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-write-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # Read MySQL (order_read_db) - CQRS Query Side
+  # Optimized for READ operations: denormalized, pre-aggregated
+  # Contains: order_summary_view (pre-computed totals per user)
+  # ============================================================
+  mysql-read:
+    image: mysql:8.0
+    container_name: mysql-read
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: order_read_db
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-read-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # RabbitMQ - Message Broker for Event-Driven Architecture
+  # Used to propagate OrderCreatedEvent from command → query service
+  # Enables eventual consistency between write and read models
+  # Management UI: http://localhost:15672 (guest/guest)
+  # ============================================================
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"    # AMQP protocol
+      - "15672:15672"  # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql-main-data:
+  mysql-write-data:
+  mysql-read-data:
+  rabbitmq-data:

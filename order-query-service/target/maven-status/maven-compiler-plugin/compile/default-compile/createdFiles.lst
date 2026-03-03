@@ -1,0 +1,10 @@
+com\demo\orderquery\controller\OrderQueryController.class
+com\demo\orderquery\entity\OrderSummaryView$OrderSummaryViewBuilder.class
+com\demo\orderquery\OrderQueryServiceApplication.class
+com\demo\orderquery\repository\OrderSummaryViewRepository.class
+com\demo\orderquery\event\OrderEventListener.class
+com\demo\orderquery\entity\OrderSummaryView.class
+com\demo\orderquery\service\OrderQueryService.class
+com\demo\orderquery\config\RabbitMQConfig.class
+com\demo\orderquery\event\OrderCreatedEvent.class
+com\demo\orderquery\event\OrderCreatedEvent$OrderCreatedEventBuilder.class
